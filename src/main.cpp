@@ -20,7 +20,7 @@ void confPwmModeFastPwm()
 {
     // Clear OC0A on compare match (non-inverting)
     TCCR0A = (1 << COM0A1);
-    // Fast PWM: top: , update OCRA at BOTTOM, TOV flag set on MAX
+    // Fast PWM: top: 0xFF , update OCRA at BOTTOM, TOV flag set on MAX
     TCCR0A |= (1 << WGM01) | (1 << WGM00);
     // Enable timer/Counter0 compare match interrupt on overflow
     TIMSK0 = (1 << TOIE0);
@@ -37,6 +37,7 @@ void confPwmModeTwoPhase()
 
 void setClockPrescaler(int prescalerFactor)
 {
+    TCCR0B &= ~(0x7);
     switch (prescalerFactor)
     {
     case 1:
